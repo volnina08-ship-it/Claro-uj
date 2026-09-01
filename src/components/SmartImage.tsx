@@ -25,7 +25,7 @@ export function PlaceholderArt({
   return (
     <div
       aria-hidden="true"
-      className={`relative flex h-full w-full items-center justify-center overflow-hidden ${className}`}
+      className={`flex h-full w-full items-center justify-center overflow-hidden ${className}`}
       style={{ background: bg }}
     >
       <div className="absolute inset-0 opacity-[0.06] [background-image:repeating-linear-gradient(45deg,transparent_0px,transparent_14px,#c9a26d_14px,#c9a26d_15px)]" />
@@ -80,8 +80,10 @@ export default function SmartImage({
     );
   }
 
+  // Kitöltő mód: a pozicionálást (pl. absolute inset-0) a hívó adja a
+  // className-ben – itt nem teszünk mellé ütköző position osztályt.
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`overflow-hidden ${className}`}>
       {showPlaceholder ? (
         <PlaceholderArt seed={seed} label={label} className="absolute inset-0" />
       ) : (

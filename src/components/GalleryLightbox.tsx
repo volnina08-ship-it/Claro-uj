@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import SmartImage, { PlaceholderArt } from "./SmartImage";
 import { IconChevronLeft, IconChevronRight, IconClose } from "./icons";
@@ -23,6 +23,7 @@ export function LightboxOverlay({
   lang: Lang;
 }) {
   const d = t(lang);
+  const touchX = useRef<number | null>(null);
 
   useEffect(() => {
     if (active === null) return;
@@ -49,6 +50,18 @@ export function LightboxOverlay({
           transition={{ duration: 0.25 }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-coal-deep/95 backdrop-blur-md"
           onClick={onClose}
+          onTouchStart={(e) => {
+            touchX.current = e.touches[0]?.clientX ?? null;
+          }}
+          onTouchEnd={(e) => {
+            // Mobil lapozás húzással
+            const start = touchX.current;
+            touchX.current = null;
+            const end = e.changedTouches[0]?.clientX;
+            if (start === null || end === undefined) return;
+            const delta = end - start;
+            if (Math.abs(delta) > 45) onStep(delta < 0 ? 1 : -1);
+          }}
         >
           <motion.img
             key={active}
@@ -80,7 +93,7 @@ export function LightboxOverlay({
                   e.stopPropagation();
                   onStep(-1);
                 }}
-                className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
+                className="absolute left-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold sm:flex"
               >
                 <IconChevronLeft className="h-5 w-5" />
               </button>
@@ -91,7 +104,7 @@ export function LightboxOverlay({
                   e.stopPropagation();
                   onStep(1);
                 }}
-                className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
+                className="absolute right-4 top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold sm:flex"
               >
                 <IconChevronRight className="h-5 w-5" />
               </button>

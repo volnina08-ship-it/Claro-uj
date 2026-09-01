@@ -41,9 +41,11 @@ export default function Navbar({ lang }: { lang: Lang }) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      {/* A háttérsáv felfelé túlnyúlik a viewporton, hogy iOS Safariban a
+          behúzott címsáv mögött se látsszon át a tartalom. */}
       <div
         className={[
-          "absolute inset-x-0 top-0 h-16 transition-all duration-500",
+          "absolute inset-x-0 -top-32 h-48 transition-all duration-500",
           scrolled
             ? "bg-coal/85 backdrop-blur-md border-b border-gold/10 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
             : "bg-transparent border-b border-transparent",
