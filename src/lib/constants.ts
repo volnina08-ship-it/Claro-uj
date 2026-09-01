@@ -1,10 +1,21 @@
-export const SUPABASE_URL =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://vaugvocquojsbdpstnxd.supabase.co";
+/* Az env csak akkor számít, ha nem üres – üresen hagyott Vercel env
+   változó (pl. integráció által létrehozott placeholder) ne írja felül
+   a működő alapértékeket. */
+function envOr(value: string | undefined, fallback: string): string {
+  const v = value?.trim();
+  return v ? v : fallback;
+}
+
+export const SUPABASE_URL = envOr(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  "https://vaugvocquojsbdpstnxd.supabase.co"
+);
 
 // Publikus anon kulcs – a védelmet a Supabase RLS adja.
-export const SUPABASE_ANON_KEY =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhdWd2b2NxdW9qc2JkcHN0bnhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNjAyMTcsImV4cCI6MjEwMzgzNjIxN30.8IMxInB1DTCmrF6XdniidzxxjsVcNx_wwyfPG9OEKJ4";
+export const SUPABASE_ANON_KEY = envOr(
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhdWd2b2NxdW9qc2JkcHN0bnhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgyNjAyMTcsImV4cCI6MjEwMzgzNjIxN30.8IMxInB1DTCmrF6XdniidzxxjsVcNx_wwyfPG9OEKJ4"
+);
 
 export const CONTACT = {
   email: "info@clarobisztro.hu",
