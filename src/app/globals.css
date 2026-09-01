@@ -48,6 +48,15 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-coal);
+}
+
+/* Vízszintes túllógás vágása "clip"-pel: a "hidden"-nel ellentétben nem
+   csinál görgető konténert a body-ból – az iOS Safariban a fix fejléc
+   csak így tapad rendesen a viewport tetejéhez. */
+html,
+body {
+  overflow-x: clip;
 }
 
 body {
@@ -55,7 +64,6 @@ body {
   color: var(--color-mist);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 /* Nagyon finom filmszemcse a mélységért */
