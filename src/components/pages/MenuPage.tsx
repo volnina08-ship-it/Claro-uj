@@ -1,36 +1,27 @@
 import SiteShell from "../SiteShell";
 import Reveal from "../Reveal";
-import SmartImage from "../SmartImage";
-import WeeklyMenuCard from "../WeeklyMenuCard";
-import SpecialtiesCard from "../SpecialtiesCard";
-import GalleryLightbox from "../GalleryLightbox";
+import MenuShowcase from "../MenuShowcase";
 import PageCta from "../sections/PageCta";
 import { RedButton, OutlineButton } from "../Buttons";
-import { getGalleryImages, getMenuImages, getSpecialties, getWeeklyMenu } from "@/lib/data";
+import { getDailyMenuImage } from "@/lib/data";
 import { localePath, t, type Lang } from "@/lib/i18n";
 
 export default async function MenuPage({ lang }: { lang: Lang }) {
   const d = t(lang).menuPage;
-  const [weekly, specialties, menuImages, galleryImages, menuHero, menuSide] = await Promise.all([
-    getWeeklyMenu(),
-    getSpecialties(),
-    getMenuImages(),
-    getGalleryImages("gallery"),
-    getGalleryImages("menu_hero"),
-    getGalleryImages("menu_side"),
-  ]);
-
-  const heroImg = menuHero[0]?.url ?? galleryImages[0]?.url ?? null;
-  const sideImg = menuSide[0]?.url ?? galleryImages[1]?.url ?? null;
-  const fullMenuImages = menuImages.filter((m) => m.category === "menu");
+  // Az adminból cserélhető napi menü kép; amíg nincs feltöltve, a repóban lévő él
+  const dailyUrl = (await getDailyMenuImage()) ?? "/images/napi-menu.avif";
 
   return (
     <SiteShell lang={lang}>
-      {/* Hero háttérképpel */}
+      {/* Hero – halvány háttérképpel */}
       <section className="relative flex min-h-[420px] items-center justify-center overflow-hidden pb-16 pt-36">
-        {/* A háttérkép szándékosan halvány, hogy a cím maradjon a fókuszban */}
         <div className="absolute inset-0">
-          <SmartImage src={heroImg} alt="" seed={21} className="absolute inset-0 opacity-55" label="" />
+          <img
+            src="/images/menu-hero.avif"
+            alt=""
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover opacity-55"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-coal/72 via-coal/82 to-coal" />
         </div>
         <div className="container-site relative text-center">
@@ -71,59 +62,20 @@ export default async function MenuPage({ lang }: { lang: Lang }) {
           </Reveal>
           <Reveal delay={0.15}>
             <div className="relative h-[300px] overflow-hidden rounded-[34px] border border-gold/50 md:h-[360px]">
-              <SmartImage src={sideImg} alt="" seed={5} className="absolute inset-0" />
+              <img
+                src="/images/menu-side.avif"
+                alt="Claro Bisztró – sült fogas friss salátával"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover"
+              />
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* Napi menü */}
-      <section id="napi-menu" className="container-site mt-28 scroll-mt-24">
-        <Reveal>
-          <h2 className="text-center font-fraunces text-[36px] font-semibold text-cream md:text-[44px]">
-            {d.dailyTitle}
-          </h2>
-          <p className="mt-3 text-center text-[14.5px] text-mist">{d.dailySub}</p>
-        </Reveal>
-        <Reveal delay={0.12}>
-          <div className="mx-auto mt-12 max-w-[620px] transition-transform duration-700 hover:-rotate-[0.4deg] hover:scale-[1.01]">
-            <WeeklyMenuCard data={weekly} />
-          </div>
-        </Reveal>
-      </section>
-
-      {/* Magyaros ajánlat */}
-      <section id="etlap" className="container-site mt-28 scroll-mt-24">
-        <Reveal>
-          <h2 className="text-center font-fraunces text-[36px] font-semibold text-cream md:text-[44px]">
-            {d.specialtiesTitle}
-          </h2>
-        </Reveal>
-        <Reveal delay={0.12}>
-          <div className="mx-auto mt-12 max-w-[980px]">
-            <SpecialtiesCard data={specialties} />
-          </div>
-        </Reveal>
-      </section>
-
-      {/* Teljes étlap képek – csak ha van feltöltve */}
-      {fullMenuImages.length > 0 && (
-        <section className="container-site mt-28">
-          <Reveal>
-            <h2 className="text-center font-fraunces text-[36px] font-semibold text-cream md:text-[44px]">
-              {d.fullMenuTitle}
-            </h2>
-          </Reveal>
-          <Reveal delay={0.12} className="mt-12">
-            <GalleryLightbox
-              lang={lang}
-              variant="masonry"
-              gridClass="columns-1 gap-8 md:columns-2"
-              images={fullMenuImages.map((m) => ({ url: m.url, alt: m.title }))}
-            />
-          </Reveal>
-        </section>
-      )}
+      {/* Napi menü + Menü képek (közös lightbox) */}
+      <MenuShowcase lang={lang} dailyUrl={dailyUrl} />
 
       {/* Záró CTA */}
       <PageCta
@@ -131,8 +83,6 @@ export default async function MenuPage({ lang }: { lang: Lang }) {
         sub={d.ctaSub}
         primary={{ label: d.contact, href: localePath(lang, "/contact") }}
         secondary={{ label: d.reserve2, href: localePath(lang, "/contact") }}
-        imageUrl={galleryImages[2]?.url ?? null}
-        seed={8}
       />
     </SiteShell>
   );

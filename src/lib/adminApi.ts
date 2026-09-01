@@ -6,23 +6,6 @@ import type { GalleryImage, MenuImage } from "./content";
 /* Admin műveletek – minden hívást a Supabase RLS véd,
    csak az admins táblában szereplő email írhat. */
 
-export async function fetchContent<T>(key: string): Promise<T | null> {
-  const { data, error } = await getSupabase()
-    .from("site_content")
-    .select("data")
-    .eq("key", key)
-    .maybeSingle();
-  if (error || !data) return null;
-  return data.data as T;
-}
-
-export async function saveContent(key: string, data: unknown): Promise<string | null> {
-  const { error } = await getSupabase()
-    .from("site_content")
-    .upsert({ key, data, updated_at: new Date().toISOString() }, { onConflict: "key" });
-  return error ? error.message : null;
-}
-
 export async function listGallery(): Promise<GalleryImage[]> {
   const { data } = await getSupabase()
     .from("gallery_images")

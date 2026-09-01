@@ -4,21 +4,18 @@ import AboutRed from "../sections/AboutRed";
 import MenuCta from "../sections/MenuCta";
 import Reveal from "../Reveal";
 import GalleryLightbox from "../GalleryLightbox";
-import { getGalleryImages, getWeeklyMenu } from "@/lib/data";
+import { getGalleryImages } from "@/lib/data";
 import { t, type Lang } from "@/lib/i18n";
 
 export default async function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
-  const [heroImages, homeImages, menuCtaImages, weekly] = await Promise.all([
-    getGalleryImages("hero"),
-    getGalleryImages("home"),
-    getGalleryImages("menucta"),
-    getWeeklyMenu(),
-  ]);
+  // A galéria első 6 képe jelenik meg a kezdőlapon
+  const gallery = await getGalleryImages("gallery");
+  const homeImages = gallery.slice(0, 6);
 
   return (
     <SiteShell lang={lang}>
-      <HomeHero lang={lang} images={heroImages} />
+      <HomeHero lang={lang} />
 
       <AboutRed lang={lang} />
 
@@ -42,7 +39,7 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         </Reveal>
       </section>
 
-      <MenuCta lang={lang} weekly={weekly} image={menuCtaImages[0] ?? null} />
+      <MenuCta lang={lang} />
     </SiteShell>
   );
 }

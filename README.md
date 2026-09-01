@@ -20,12 +20,12 @@ szerkeszthetnek (RLS védi az összes írást, a képfeltöltést is).
 
 Funkciók:
 
-- **Heti menü** – napok, levesek, főételek, árak, megjegyzések szerkesztése élő előnézettel.
-  Ebből épül fel a fehér „Napi menü" kártya a Menü oldalon és a kezdőlapon.
-- **Magyaros ajánlat** – a piros-fehér étlapkártya kategóriái, ételei, árai (HU + EN).
-- **Étlap képek** – a Menü oldal „Teljes étlap" szekciójának képei (pl. beszkennelt étlap).
-- **Galéria** – képfeltöltés három helyre: kezdőlap kollázs (hero), kezdőlapi galéria rács,
-  galéria oldal. Sorrendezés, áthelyezés, törlés, alt szöveg.
+- **Heti menü** – a Menü oldal „Napi menü" szekciójában megjelenő kép cseréje.
+- **Galéria** – képfeltöltés, sorrendezés, törlés, alt szöveg. Az első 6 kép a kezdőlap
+  Galéria szekciójában is megjelenik.
+
+Minden más kép (hero kollázs, Menü CTA, menü oldal háttér és képek, Magyaros Ajánlat,
+6 oldalas étlap) permanens: a repó `public/images/` mappájában él, cseréjük kódból történik.
 
 A mentett változások kb. 1 percen belül élesednek a publikus oldalon (ISR revalidate).
 

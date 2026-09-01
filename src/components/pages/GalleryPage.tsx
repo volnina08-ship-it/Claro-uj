@@ -32,8 +32,8 @@ export default async function GalleryPage({ lang }: { lang: Lang }) {
         sub={d.ctaSub}
         primary={{ label: d.reserve, href: localePath(lang, "/contact") }}
         secondary={{ label: d.contact, href: localePath(lang, "/contact") }}
-        imageUrl={images[3]?.url ?? null}
-        seed={13}
+        imageUrl="/images/home-cta.avif"
+        imageAlt="Claro Bisztró – bélszín steak burgonyaröszti körettel"
       />
     </SiteShell>
   );

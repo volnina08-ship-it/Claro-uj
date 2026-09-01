@@ -8,6 +8,104 @@ import { t, type Lang } from "@/lib/i18n";
 
 export type LightboxImage = { url: string; alt: string };
 
+/* Teljes képernyős lightbox – a galéria és a menü képnézegetője is ezt használja. */
+export function LightboxOverlay({
+  images,
+  active,
+  onClose,
+  onStep,
+  lang,
+}: {
+  images: LightboxImage[];
+  active: number | null;
+  onClose: () => void;
+  onStep: (dir: 1 | -1) => void;
+  lang: Lang;
+}) {
+  const d = t(lang);
+
+  useEffect(() => {
+    if (active === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") onStep(1);
+      if (e.key === "ArrowLeft") onStep(-1);
+    };
+    document.documentElement.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.documentElement.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [active, onClose, onStep]);
+
+  return (
+    <AnimatePresence>
+      {active !== null && images[active] && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-coal-deep/95 backdrop-blur-md"
+          onClick={onClose}
+        >
+          <motion.img
+            key={active}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.97 }}
+            transition={{ duration: 0.3 }}
+            src={images[active].url}
+            alt={images[active].alt}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[85vh] max-w-[92vw] rounded-2xl border border-gold/35 object-contain shadow-[0_40px_120px_rgba(0,0,0,0.7)]"
+          />
+
+          <button
+            type="button"
+            aria-label={d.misc.close}
+            onClick={onClose}
+            className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
+          >
+            <IconClose className="h-5 w-5" />
+          </button>
+
+          {images.length > 1 && (
+            <>
+              <button
+                type="button"
+                aria-label={d.misc.prev}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onStep(-1);
+                }}
+                className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
+              >
+                <IconChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                aria-label={d.misc.next}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onStep(1);
+                }}
+                className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
+              >
+                <IconChevronRight className="h-5 w-5" />
+              </button>
+              <p className="absolute bottom-6 left-1/2 -translate-x-1/2 font-sans text-[13px] tracking-[0.2em] text-cream/70">
+                {active + 1} / {images.length}
+              </p>
+            </>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 /* Galéria rács vagy "masonry" elrendezés kattintható lightboxszal.
    Ha nincs feltöltött kép, stílusos placeholderek rajzolják ki a rácsot. */
 export default function GalleryLightbox({
@@ -36,21 +134,6 @@ export default function GalleryLightbox({
     },
     [hasImages, images.length]
   );
-
-  useEffect(() => {
-    if (active === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") step(1);
-      if (e.key === "ArrowLeft") step(-1);
-    };
-    document.documentElement.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.documentElement.style.overflow = "";
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [active, close, step]);
 
   // Placeholder magasság-variációk a masonry ritmusához
   const masonryAspect = ["aspect-[4/3]", "aspect-square", "aspect-[3/4]", "aspect-[4/3]", "aspect-[3/4]", "aspect-square"];
@@ -114,69 +197,7 @@ export default function GalleryLightbox({
         </div>
       )}
 
-      <AnimatePresence>
-        {active !== null && hasImages && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-coal-deep/95 backdrop-blur-md"
-            onClick={close}
-          >
-            <motion.img
-              key={active}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.3 }}
-              src={images[active].url}
-              alt={images[active].alt}
-              onClick={(e) => e.stopPropagation()}
-              className="max-h-[82vh] max-w-[90vw] rounded-2xl border border-gold/35 object-contain shadow-[0_40px_120px_rgba(0,0,0,0.7)]"
-            />
-
-            <button
-              type="button"
-              aria-label={d.misc.close}
-              onClick={close}
-              className="absolute right-5 top-5 flex h-11 w-11 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
-            >
-              <IconClose className="h-5 w-5" />
-            </button>
-
-            {images.length > 1 && (
-              <>
-                <button
-                  type="button"
-                  aria-label={d.misc.prev}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(-1);
-                  }}
-                  className="absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
-                >
-                  <IconChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  aria-label={d.misc.next}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(1);
-                  }}
-                  className="absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cream/25 text-cream transition-colors hover:border-gold hover:text-gold"
-                >
-                  <IconChevronRight className="h-5 w-5" />
-                </button>
-                <p className="absolute bottom-6 left-1/2 -translate-x-1/2 font-sans text-[13px] tracking-[0.2em] text-cream/70">
-                  {active + 1} / {images.length}
-                </p>
-              </>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <LightboxOverlay images={images} active={active} onClose={close} onStep={step} lang={lang} />
     </>
   );
 }

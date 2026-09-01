@@ -7,25 +7,21 @@ import { SunMark } from "../Logo";
 import { IconLogout } from "../icons";
 import { GhostButton, Spinner } from "./ui";
 import LoginForm from "./LoginForm";
-import WeeklyMenuEditor from "./WeeklyMenuEditor";
-import SpecialtiesEditor from "./SpecialtiesEditor";
+import DailyMenuManager from "./DailyMenuManager";
 import GalleryManager from "./GalleryManager";
-import MenuImagesManager from "./MenuImagesManager";
 
 type Status = "loading" | "signedout" | "unauthorized" | "ready";
-type Tab = "weekly" | "specialties" | "menuimages" | "gallery";
+type Tab = "daily" | "gallery";
 
 const tabs: { id: Tab; label: string }[] = [
-  { id: "weekly", label: "Heti menü" },
-  { id: "specialties", label: "Magyaros ajánlat" },
-  { id: "menuimages", label: "Étlap képek" },
+  { id: "daily", label: "Heti menü" },
   { id: "gallery", label: "Galéria" },
 ];
 
 export default function AdminApp() {
   const [status, setStatus] = useState<Status>("loading");
   const [session, setSession] = useState<Session | null>(null);
-  const [tab, setTab] = useState<Tab>("weekly");
+  const [tab, setTab] = useState<Tab>("daily");
 
   useEffect(() => {
     const supabase = getSupabase();
@@ -121,9 +117,7 @@ export default function AdminApp() {
           A mentett módosítások kb. <span className="text-cream">1 percen belül</span> jelennek meg a
           publikus oldalon.
         </p>
-        {tab === "weekly" && <WeeklyMenuEditor />}
-        {tab === "specialties" && <SpecialtiesEditor />}
-        {tab === "menuimages" && <MenuImagesManager />}
+        {tab === "daily" && <DailyMenuManager />}
         {tab === "gallery" && <GalleryManager />}
       </div>
     </div>
