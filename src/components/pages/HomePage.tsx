@@ -9,9 +9,10 @@ import { t, type Lang } from "@/lib/i18n";
 
 export default async function HomePage({ lang }: { lang: Lang }) {
   const d = t(lang);
-  const [heroImages, homeImages, weekly] = await Promise.all([
+  const [heroImages, homeImages, menuCtaImages, weekly] = await Promise.all([
     getGalleryImages("hero"),
     getGalleryImages("home"),
+    getGalleryImages("menucta"),
     getWeeklyMenu(),
   ]);
 
@@ -41,7 +42,7 @@ export default async function HomePage({ lang }: { lang: Lang }) {
         </Reveal>
       </section>
 
-      <MenuCta lang={lang} weekly={weekly} />
+      <MenuCta lang={lang} weekly={weekly} image={menuCtaImages[0] ?? null} />
     </SiteShell>
   );
 }

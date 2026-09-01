@@ -10,18 +10,33 @@ import { Card, IconBtn, Spinner, Toast, inputClass } from "./ui";
 const sections: { id: GalleryImage["section"]; label: string; hint: string }[] = [
   {
     id: "hero",
-    label: "Kezdőlap kollázs",
-    hint: "A kezdőlap tetején lévő képkollázs. Az 1. kép az íves, a 2. a széles helyre kerül, a többi a magas képen váltakozik.",
+    label: "Kezdőlap – hero",
+    hint: "A kezdőlap tetején lévő képhely. Ha PONTOSAN 1 képet töltesz fel (pl. a kész hero-kollázs grafikát), az egyben jelenik meg. Ha többet, élő kollázs épül: 1. kép az íves, 2. a széles helyre kerül, a többi a magas képen váltakozik.",
   },
   {
     id: "home",
-    label: "Kezdőlap galéria",
+    label: "Kezdőlap – galéria",
     hint: "A kezdőlapi Galéria szekció rácsa – 6 kép az ideális.",
+  },
+  {
+    id: "menucta",
+    label: "Kezdőlap – Menü CTA",
+    hint: "A kezdőlap alján, a „Fedezd fel étlapunkat” melletti arany keretes képhely (1 kép elég – az első képet használjuk). Amíg üres, a napi menü kártya jelenik meg ott.",
   },
   {
     id: "gallery",
     label: "Galéria oldal",
-    hint: "A teljes galéria oldal képei. Az első képek a menü és galéria oldalak díszítésénél is megjelennek.",
+    hint: "A teljes galéria oldal képei. Az első képek a galéria oldal alján lévő CTA-nál is megjelennek.",
+  },
+  {
+    id: "menu_hero",
+    label: "Menü oldal – fejléc háttér",
+    hint: "A Menü oldal tetején, a „Menüválaszték” cím mögött halványan megjelenő háttérkép (1 kép elég).",
+  },
+  {
+    id: "menu_side",
+    label: "Menü oldal – Gasztro élmény",
+    hint: "A Menü oldalon a „Fedezd fel ételeinket és italainkat” szöveg melletti kép (1 kép elég).",
   },
 ];
 

@@ -1,12 +1,21 @@
 import Reveal from "../Reveal";
 import WeeklyMenuCard from "../WeeklyMenuCard";
+import SmartImage from "../SmartImage";
 import { RedButton, ArrowLink } from "../Buttons";
 import { localePath, t, type Lang } from "@/lib/i18n";
-import type { WeeklyMenu } from "@/lib/content";
+import type { GalleryImage, WeeklyMenu } from "@/lib/content";
 
-/* Kezdőlapi "Fedezd fel étlapunkat" szekció – az arany keretben
-   az élő napi menü kártya kicsinyített változata jelenik meg. */
-export default function MenuCta({ lang, weekly }: { lang: Lang; weekly: WeeklyMenu }) {
+/* Kezdőlapi "Fedezd fel étlapunkat" szekció – az arany keretben a
+   feltöltött étel-fotó, amíg nincs, addig az élő napi menü kártya. */
+export default function MenuCta({
+  lang,
+  weekly,
+  image,
+}: {
+  lang: Lang;
+  weekly: WeeklyMenu;
+  image?: GalleryImage | null;
+}) {
   const d = t(lang);
   return (
     <section className="container-site mt-28">
@@ -23,9 +32,21 @@ export default function MenuCta({ lang, weekly }: { lang: Lang; weekly: WeeklyMe
         </Reveal>
         <Reveal delay={0.15}>
           <div className="group relative rounded-[40px] border border-gold/60 bg-coal-deep/40 p-4 transition-transform duration-700 hover:-translate-y-1.5 sm:p-5">
-            <div className="max-h-[430px] overflow-hidden rounded-[26px] [mask-image:linear-gradient(to_bottom,black_78%,transparent_100%)]">
-              <WeeklyMenuCard data={weekly} compact />
-            </div>
+            {image ? (
+              <div className="relative h-[360px] overflow-hidden rounded-[26px] sm:h-[420px]">
+                <SmartImage
+                  src={image.url}
+                  alt={image.alt}
+                  seed={7}
+                  className="absolute inset-0"
+                  imgClassName="transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                />
+              </div>
+            ) : (
+              <div className="max-h-[430px] overflow-hidden rounded-[26px] [mask-image:linear-gradient(to_bottom,black_78%,transparent_100%)]">
+                <WeeklyMenuCard data={weekly} compact />
+              </div>
+            )}
           </div>
         </Reveal>
       </div>

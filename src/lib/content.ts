@@ -42,11 +42,16 @@ export type Specialties = {
   sections: SpecialtySection[];
 };
 
+/* Kép szekciók: hero = kezdőlap kollázs, home = kezdőlapi galéria rács,
+   gallery = galéria oldal, menucta = kezdőlapi Menü CTA képe,
+   menu_hero = menü oldal fejléc háttere, menu_side = menü oldal Gasztro képe */
+export type GallerySection = "hero" | "home" | "gallery" | "menucta" | "menu_hero" | "menu_side";
+
 export type GalleryImage = {
   id: string;
   url: string;
   alt: string;
-  section: "hero" | "home" | "gallery";
+  section: GallerySection;
   sort_order: number;
 };
 

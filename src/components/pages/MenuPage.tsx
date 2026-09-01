@@ -11,24 +11,27 @@ import { localePath, t, type Lang } from "@/lib/i18n";
 
 export default async function MenuPage({ lang }: { lang: Lang }) {
   const d = t(lang).menuPage;
-  const [weekly, specialties, menuImages, galleryImages] = await Promise.all([
+  const [weekly, specialties, menuImages, galleryImages, menuHero, menuSide] = await Promise.all([
     getWeeklyMenu(),
     getSpecialties(),
     getMenuImages(),
     getGalleryImages("gallery"),
+    getGalleryImages("menu_hero"),
+    getGalleryImages("menu_side"),
   ]);
 
-  const heroImg = galleryImages[0]?.url ?? null;
-  const sideImg = galleryImages[1]?.url ?? null;
+  const heroImg = menuHero[0]?.url ?? galleryImages[0]?.url ?? null;
+  const sideImg = menuSide[0]?.url ?? galleryImages[1]?.url ?? null;
   const fullMenuImages = menuImages.filter((m) => m.category === "menu");
 
   return (
     <SiteShell lang={lang}>
       {/* Hero háttérképpel */}
       <section className="relative flex min-h-[420px] items-center justify-center overflow-hidden pb-16 pt-36">
+        {/* A háttérkép szándékosan halvány, hogy a cím maradjon a fókuszban */}
         <div className="absolute inset-0">
-          <SmartImage src={heroImg} alt="" seed={21} className="absolute inset-0" label="" />
-          <div className="absolute inset-0 bg-gradient-to-b from-coal/70 via-coal/78 to-coal" />
+          <SmartImage src={heroImg} alt="" seed={21} className="absolute inset-0 opacity-55" label="" />
+          <div className="absolute inset-0 bg-gradient-to-b from-coal/72 via-coal/82 to-coal" />
         </div>
         <div className="container-site relative text-center">
           <Reveal>

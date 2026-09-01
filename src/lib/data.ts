@@ -7,6 +7,7 @@ import {
   DEFAULT_SPECIALTIES,
   DEFAULT_WEEKLY_MENU,
   type GalleryImage,
+  type GallerySection,
   type MenuImage,
   type Specialties,
   type WeeklyMenu,
@@ -49,9 +50,7 @@ export async function getSpecialties(): Promise<Specialties> {
   return { ...DEFAULT_SPECIALTIES, ...data };
 }
 
-export async function getGalleryImages(
-  section: "hero" | "home" | "gallery"
-): Promise<GalleryImage[]> {
+export async function getGalleryImages(section: GallerySection): Promise<GalleryImage[]> {
   const rows = await rest<GalleryImage[]>(
     `gallery_images?section=eq.${section}&select=id,url,alt,section,sort_order&order=sort_order.asc,created_at.asc`
   );

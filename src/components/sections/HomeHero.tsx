@@ -31,8 +31,10 @@ const fadeUp: Variants = {
 export default function HomeHero({ lang, images }: { lang: Lang; images: GalleryImage[] }) {
   const d = t(lang);
 
-  // Képek elosztása a kollázs helyeire: ív, széles, magas (a maradék a magas
-  // helyen automatikusan váltakozik)
+  // Egyetlen feltöltött kép esetén azt egyben jelenítjük meg (pl. kész
+  // hero-kollázs grafika); több képnél élő kollázst építünk: ív, széles,
+  // magas (a maradék a magas helyen automatikusan váltakozik)
+  const composite = images.length === 1 ? images[0] : null;
   const arch = images[0] ?? null;
   const wide = images[1] ?? null;
   const tallImages = useMemo(() => images.slice(2), [images]);
@@ -95,6 +97,15 @@ export default function HomeHero({ lang, images }: { lang: Lang; images: Gallery
           transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 0.61, 0.36, 1] }}
           className="relative mx-auto w-full max-w-[560px]"
         >
+          {composite ? (
+            <div className="animate-float-a relative">
+              <img
+                src={composite.url}
+                alt={composite.alt || "Claro Bisztró"}
+                className="h-auto w-full drop-shadow-[0_30px_70px_rgba(0,0,0,0.5)]"
+              />
+            </div>
+          ) : (
           <div className="grid grid-cols-2 gap-4 sm:gap-5">
             {/* Bal oszlop */}
             <div className="flex flex-col gap-4 pt-4 sm:gap-5">
@@ -173,6 +184,7 @@ export default function HomeHero({ lang, images }: { lang: Lang; images: Gallery
               </div>
             </div>
           </div>
+          )}
 
           {/* Díszítő csillámok */}
           <Star4 className="animate-twinkle absolute -left-7 top-[56%] h-5 w-5 text-cream/80" />
