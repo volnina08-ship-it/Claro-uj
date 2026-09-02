@@ -132,13 +132,13 @@ export default function NotFoundPage({ lang }: { lang: Lang }) {
               <p className="mt-1 text-center font-sans text-[10.5px] italic text-ink/50">{c.receipt.footnote}</p>
             </div>
 
-            {/* Fogazott nyugta-szél */}
+            {/* Fogazott nyugta-szél: lefelé mutató papír-fogak, köztük a sötét háttér */}
             <div
               aria-hidden
               className="h-3 w-full"
               style={{
                 backgroundImage:
-                  "linear-gradient(-45deg, var(--color-parchment) 6px, transparent 0), linear-gradient(45deg, var(--color-parchment) 6px, transparent 0)",
+                  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M0 0h12L6 12z' fill='%23fdfaf1'/%3E%3C/svg%3E\")",
                 backgroundSize: "12px 12px",
                 backgroundRepeat: "repeat-x",
                 backgroundPosition: "left top",
