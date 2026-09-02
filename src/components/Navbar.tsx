@@ -40,21 +40,18 @@ export default function Navbar({ lang }: { lang: Lang }) {
     href === "/" || href === "/hu" ? pathname === href : pathname.startsWith(href);
 
   return (
-    /* Sticky (nem fixed!) fejléc: az iOS Safari a fixed rétegeket levágja a
-       viewport szélénél, a sticky viszont a görgetett tartalom rétegében él,
-       így a felfelé túlnyúló sötét háttérsáv a böngésző címsávja mögött is
-       kirajzolódik. A h-0 miatt nem foglal helyet a layoutban. */
-    <header className="sticky inset-x-0 top-0 z-50 h-0">
-      {/* A sáv felső ~65%-a (a böngésző címsávja mögötti rész) teljesen
-          átlátszatlan, csak a nav-sor zónája áttetsző-blurös. */}
-      <div
-        className={[
-          "absolute inset-x-0 -top-40 h-56 transition-all duration-500 backdrop-blur-md",
-          scrolled
-            ? "bg-gradient-to-b from-coal from-[62%] via-coal/90 to-coal/75 border-b border-gold/10 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
-            : "bg-transparent border-b border-transparent backdrop-blur-none",
-        ].join(" ")}
-      />
+    /* Teljesen átlátszatlan, sticky fejléc-blokk az oldal legtetején.
+       A fölé nyúló tömör sáv garantálja, hogy iOS Safariban a böngésző
+       címsávja mögé se csússzon be soha tartalom – ott csak a sötét
+       háttérszín látszik. (Sticky, mert az iOS a fixed rétegeket levágja
+       a viewport szélénél.) */
+    <header
+      className={[
+        "sticky inset-x-0 top-0 z-50 h-16 bg-coal border-b border-gold/10 transition-shadow duration-500",
+        scrolled ? "shadow-[0_10px_40px_rgba(0,0,0,0.45)]" : "",
+      ].join(" ")}
+    >
+      <div aria-hidden className="absolute inset-x-0 -top-40 h-40 bg-coal" />
       <nav className="relative flex items-start justify-between pr-5 md:pr-8">
         {/* A logó plakett a bal felső sarokból lóg be, mint az eredetin */}
         <div className="pl-4 md:pl-6">

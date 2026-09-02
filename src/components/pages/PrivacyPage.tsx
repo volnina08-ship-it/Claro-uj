@@ -58,7 +58,7 @@ export default function PrivacyPage({ lang }: { lang: Lang }) {
   const c = copy[lang];
   return (
     <SiteShell lang={lang}>
-      <section className="container-site max-w-[820px] pt-36">
+      <section className="container-site max-w-[820px] pt-20">
         <Reveal>
           <h1 className="font-fraunces text-[40px] font-semibold text-cream md:text-[48px]">{c.title}</h1>
           <p className="mt-6 text-[15px] leading-relaxed text-mist">{c.intro}</p>
