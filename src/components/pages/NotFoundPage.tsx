@@ -135,7 +135,7 @@ export default function NotFoundPage({ lang }: { lang: Lang }) {
             {/* Fogazott nyugta-szél: lefelé mutató papír-fogak, köztük a sötét háttér */}
             <div
               aria-hidden
-              className="h-3 w-full"
+              className="relative z-10 h-3 w-full"
               style={{
                 backgroundImage:
                   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M0 0h12L6 12z' fill='%23fdfaf1'/%3E%3C/svg%3E\")",
