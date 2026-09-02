@@ -40,15 +40,19 @@ export default function Navbar({ lang }: { lang: Lang }) {
     href === "/" || href === "/hu" ? pathname === href : pathname.startsWith(href);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
-      {/* A háttérsáv felfelé túlnyúlik a viewporton, hogy iOS Safariban a
-          behúzott címsáv mögött se látsszon át a tartalom. */}
+    /* Sticky (nem fixed!) fejléc: az iOS Safari a fixed rétegeket levágja a
+       viewport szélénél, a sticky viszont a görgetett tartalom rétegében él,
+       így a felfelé túlnyúló sötét háttérsáv a böngésző címsávja mögött is
+       kirajzolódik. A h-0 miatt nem foglal helyet a layoutban. */
+    <header className="sticky inset-x-0 top-0 z-50 h-0">
+      {/* A sáv felső ~65%-a (a böngésző címsávja mögötti rész) teljesen
+          átlátszatlan, csak a nav-sor zónája áttetsző-blurös. */}
       <div
         className={[
-          "absolute inset-x-0 -top-32 h-48 transition-all duration-500",
+          "absolute inset-x-0 -top-40 h-56 transition-all duration-500 backdrop-blur-md",
           scrolled
-            ? "bg-coal/85 backdrop-blur-md border-b border-gold/10 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
-            : "bg-transparent border-b border-transparent",
+            ? "bg-gradient-to-b from-coal from-[62%] via-coal/90 to-coal/75 border-b border-gold/10 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+            : "bg-transparent border-b border-transparent backdrop-blur-none",
         ].join(" ")}
       />
       <nav className="relative flex items-start justify-between pr-5 md:pr-8">
