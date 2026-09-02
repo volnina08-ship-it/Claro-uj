@@ -44,7 +44,7 @@ export default function ContactPage({ lang }: { lang: Lang }) {
 
   return (
     <SiteShell lang={lang}>
-      <section className="container-site pb-8 pt-20">
+      <section className="container-site pb-8 pt-36">
         <Reveal>
           <p className="font-sans text-[13px] font-bold text-cream">{d.label}</p>
           <h1 className="mt-4 max-w-[720px] font-fraunces text-[40px] font-semibold leading-[1.1] text-cream md:text-[54px]">

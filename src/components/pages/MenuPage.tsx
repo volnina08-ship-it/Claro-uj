@@ -14,7 +14,7 @@ export default async function MenuPage({ lang }: { lang: Lang }) {
   return (
     <SiteShell lang={lang}>
       {/* Hero – halvány háttérképpel */}
-      <section className="relative flex min-h-[400px] items-center justify-center overflow-hidden pb-16 pt-24">
+      <section className="relative flex min-h-[420px] items-center justify-center overflow-hidden pb-16 pt-36">
         <div className="absolute inset-0">
           <img
             src="/images/menu-hero.avif"

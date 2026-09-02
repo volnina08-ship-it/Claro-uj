@@ -11,7 +11,7 @@ export default async function GalleryPage({ lang }: { lang: Lang }) {
 
   return (
     <SiteShell lang={lang}>
-      <section className="container-site pt-20">
+      <section className="container-site pt-36">
         <Reveal>
           <h1 className="text-center font-fraunces text-[44px] font-semibold text-cream md:text-[54px]">
             {d.title}

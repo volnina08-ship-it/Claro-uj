@@ -28,7 +28,7 @@ export default function HomeHero({ lang }: { lang: Lang }) {
   const d = t(lang);
 
   return (
-    <section className="relative overflow-hidden pb-20 pt-16 md:pt-20">
+    <section className="relative overflow-hidden pb-20 pt-32 md:pt-36">
       {/* Meleg fényudvar a háttérben */}
       <div
         aria-hidden
