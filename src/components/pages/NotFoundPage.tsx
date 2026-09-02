@@ -59,7 +59,7 @@ export default function NotFoundPage({ lang }: { lang: Lang }) {
 
   return (
     <SiteShell lang={lang}>
-      <section className="relative overflow-hidden pb-16 pt-36 md:pt-44">
+      <section className="relative overflow-hidden pb-16 pt-20 md:pt-28">
         {/* Lassan forgó napkorong a háttérben */}
         <SunMark className="animate-spin-slow pointer-events-none absolute -right-40 -top-24 h-[520px] w-[520px] text-gold opacity-[0.06]" />
         <SunMark className="animate-spin-slow pointer-events-none absolute -bottom-40 -left-32 h-[380px] w-[380px] text-gold opacity-[0.05]" />
