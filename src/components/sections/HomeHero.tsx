@@ -66,8 +66,8 @@ export default function HomeHero({ lang }: { lang: Lang }) {
             variants={fadeUp}
             className="mt-8 flex flex-wrap items-center gap-4"
           >
-            <RedButton href={localePath(lang, "/menu")}>{d.hero.explore}</RedButton>
-            <OutlineButton href={localePath(lang, "/contact")}>{d.hero.reserve}</OutlineButton>
+            <RedButton href={localePath(lang, "/menu")} track={{ name: "menu_click", data: { target: "full_menu" } }}>{d.hero.explore}</RedButton>
+            <OutlineButton href={localePath(lang, "/contact")} track={{ name: "reserve_cta_click", data: { location: "home_hero" } }}>{d.hero.reserve}</OutlineButton>
           </motion.div>
         </div>
 

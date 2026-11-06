@@ -32,7 +32,8 @@ export default async function MenuPage({ lang }: { lang: Lang }) {
             <p className="mt-3 text-[15px] text-mist">{d.heroSub}</p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <RedButton href="#napi-menu">{d.explore}</RedButton>
-              <OutlineButton href={localePath(lang, "/contact")}>{d.reserve}</OutlineButton>
+              <OutlineButton href={localePath(lang, "/contact")} track={{ name: "reserve_cta_click", data: { location: "menu_hero" } }}>
+                {d.reserve}</OutlineButton>
             </div>
           </Reveal>
         </div>
@@ -82,7 +83,11 @@ export default async function MenuPage({ lang }: { lang: Lang }) {
         title={d.ctaTitle}
         sub={d.ctaSub}
         primary={{ label: d.contact, href: localePath(lang, "/contact") }}
-        secondary={{ label: d.reserve2, href: localePath(lang, "/contact") }}
+        secondary={{
+          label: d.reserve2,
+          href: localePath(lang, "/contact"),
+          track: { name: "reserve_cta_click", data: { location: "menu_bottom" } },
+        }}
       />
     </SiteShell>
   );

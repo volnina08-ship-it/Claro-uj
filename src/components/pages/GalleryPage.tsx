@@ -30,7 +30,11 @@ export default async function GalleryPage({ lang }: { lang: Lang }) {
       <PageCta
         title={d.ctaTitle}
         sub={d.ctaSub}
-        primary={{ label: d.reserve, href: localePath(lang, "/contact") }}
+        primary={{
+          label: d.reserve,
+          href: localePath(lang, "/contact"),
+          track: { name: "reserve_cta_click", data: { location: "gallery_bottom" } },
+        }}
         secondary={{ label: d.contact, href: localePath(lang, "/contact") }}
         imageUrl="/images/home-cta.avif"
         imageAlt="Claro Bisztró – bélszín steak burgonyaröszti körettel"

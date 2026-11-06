@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import "@fontsource-variable/fraunces/full.css";
 import "@fontsource-variable/fraunces/full-italic.css";
 import "@fontsource-variable/montserrat";
@@ -21,7 +22,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="hu">
-      <body>{children}</body>
+      <body>
+        {children}
+        <VercelAnalytics />
+      </body>
     </html>
   );
 }
