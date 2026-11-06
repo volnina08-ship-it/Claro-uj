@@ -12,8 +12,8 @@ export default function PageCta({
 }: {
   title: string;
   sub: string;
-  primary: { label: string; href: string };
-  secondary: { label: string; href: string };
+  primary: { label: string; href: string; track?: { name: string; data?: Record<string, string> } };
+  secondary: { label: string; href: string; track?: { name: string; data?: Record<string, string> } };
   imageUrl?: string;
   imageAlt?: string;
 }) {
@@ -26,8 +26,8 @@ export default function PageCta({
           </h2>
           <p className="mt-4 max-w-[440px] text-[15px] leading-relaxed text-mist">{sub}</p>
           <div className="mt-8 flex flex-wrap items-center gap-6">
-            <RedButton href={primary.href}>{primary.label}</RedButton>
-            <ArrowLink href={secondary.href}>{secondary.label}</ArrowLink>
+            <RedButton href={primary.href} track={primary.track}>{primary.label}</RedButton>
+            <ArrowLink href={secondary.href} track={secondary.track}>{secondary.label}</ArrowLink>
           </div>
         </Reveal>
         {imageUrl ? (

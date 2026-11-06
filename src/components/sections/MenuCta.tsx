@@ -14,8 +14,8 @@ export default function MenuCta({ lang }: { lang: Lang }) {
           </h2>
           <p className="mt-4 text-[15px] text-mist">{d.menuCta.sub}</p>
           <div className="mt-8 flex flex-wrap items-center gap-6">
-            <RedButton href={localePath(lang, "/menu")}>{d.menuCta.menu}</RedButton>
-            <ArrowLink href={`${localePath(lang, "/menu")}#napi-menu`}>{d.menuCta.daily}</ArrowLink>
+            <RedButton href={localePath(lang, "/menu")} track={{ name: "menu_click", data: { target: "full_menu" } }}>{d.menuCta.menu}</RedButton>
+            <ArrowLink href={`${localePath(lang, "/menu")}#napi-menu`} track={{ name: "menu_click", data: { target: "daily_menu" } }}>{d.menuCta.daily}</ArrowLink>
           </div>
         </Reveal>
         <Reveal delay={0.15}>

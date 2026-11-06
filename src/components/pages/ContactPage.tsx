@@ -1,5 +1,6 @@
 import SiteShell from "../SiteShell";
 import Reveal from "../Reveal";
+import TrackedLink from "../TrackedLink";
 import { RedButton, ArrowLink } from "../Buttons";
 import { IconMail, IconPhone, IconPin } from "../icons";
 import { CONTACT } from "@/lib/constants";
@@ -14,9 +15,9 @@ export default function ContactPage({ lang }: { lang: Lang }) {
       title: d.emailTitle,
       text: d.emailText,
       content: (
-        <a href={`mailto:${CONTACT.email}`} className="text-[15px] text-cream underline-offset-4 transition-colors hover:text-gold hover:underline">
+        <TrackedLink event="email_click" href={`mailto:${CONTACT.email}`} className="text-[15px] text-cream underline-offset-4 transition-colors hover:text-gold hover:underline">
           {CONTACT.email}
-        </a>
+        </TrackedLink>
       ),
     },
     {
@@ -24,9 +25,9 @@ export default function ContactPage({ lang }: { lang: Lang }) {
       title: d.phoneTitle,
       text: d.phoneText,
       content: (
-        <a href={CONTACT.phoneHref} className="text-[15px] text-cream underline-offset-4 transition-colors hover:text-gold hover:underline">
+        <TrackedLink event="phone_click" data={{ location: "contact_number" }} href={CONTACT.phoneHref} className="text-[15px] text-cream underline-offset-4 transition-colors hover:text-gold hover:underline">
           {CONTACT.phoneDisplay}
-        </a>
+        </TrackedLink>
       ),
     },
     {
@@ -35,8 +36,8 @@ export default function ContactPage({ lang }: { lang: Lang }) {
       text: CONTACT.address,
       content: (
         <div className="mt-4 flex flex-wrap items-center gap-5">
-          <RedButton href={CONTACT.mapsUrl}>{d.visit}</RedButton>
-          <ArrowLink href={CONTACT.phoneHref}>{d.reserveTable}</ArrowLink>
+          <RedButton href={CONTACT.mapsUrl} track={{ name: "directions_click" }}>{d.visit}</RedButton>
+          <ArrowLink href={CONTACT.phoneHref} track={{ name: "phone_click", data: { location: "reserve_cta" } }}>{d.reserveTable}</ArrowLink>
         </div>
       ),
     },

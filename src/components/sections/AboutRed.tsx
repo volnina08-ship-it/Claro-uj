@@ -26,10 +26,18 @@ export default function AboutRed({ lang }: { lang: Lang }) {
             <div className="flex flex-col justify-center">
               <p className="text-[15px] leading-relaxed text-cream-bright/90">{d.about.text}</p>
               <div className="mt-8 flex flex-wrap items-center gap-6">
-                <OutlineButton href={localePath(lang, "/menu")} tone="white">
+                <OutlineButton
+                  href={localePath(lang, "/menu")}
+                  tone="white"
+                  track={{ name: "menu_click", data: { target: "full_menu" } }}
+                >
                   {d.about.explore}
                 </OutlineButton>
-                <ArrowLink href={localePath(lang, "/contact")} tone="white">
+                <ArrowLink
+                  href={localePath(lang, "/contact")}
+                  tone="white"
+                  track={{ name: "reserve_cta_click", data: { location: "about" } }}
+                >
                   {d.about.reserve}
                 </ArrowLink>
               </div>
